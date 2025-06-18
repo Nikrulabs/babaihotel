@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Babai Hotel: Authentic South Indian Cuisine</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Define a color palette based on the Babai Hotel logo */
+        :root {
+            --color-primary-dark-teal: #1A4B4B; /* Dark Teal from logo background */
+            --color-secondary-cream: #EBDDCD; /* Light Cream/Beige from logo text/character */
+            --color-accent-brown: #8C572D; /* A richer brown/orange for accents */
+            --color-text-dark-grey: #333333; /* Soft dark grey for body text */
+            --color-background-light-cream: #FDFBF6; /* Very light cream/off-white */
+            --color-white: #FFFFFF;
+            --color-light-grey: #F0F0F0; /* For secondary buttons, lighter backgrounds */
+            --color-border-grey: #D1D5DB; /* For borders */
+        }
+
+        /* General body styling for font and background */
+        body { font-family: 'Inter', sans-serif; background-color: var(--color-background-light-cream); color: var(--color-text-dark-grey); }
+        /* Font styling for headings - Playfair Display for elegance */
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+        
+        /* Navigation link active state */
+        .nav-link.active { color: var(--color-primary-dark-teal); border-bottom-color: var(--color-primary-dark-teal); }
+
+        /* Primary button styling */
+        .btn-primary {
+            background-color: var(--color-secondary-cream);
+            color: var(--color-primary-dark-teal); /* Text color from primary for contrast */
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease, color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: var(--color-accent-brown); /* Darker brown on hover */
+            color: var(--color-white); /* White text on hover for contrast */
+            transform: translateY(-2px);
+        }
+        
+        /* Secondary button styling */
+        .btn-secondary {
+            background-color: var(--color-light-grey);
+            color: var(--color-text-dark-grey);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            border: 1px solid var(--color-border-grey);
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .btn-secondary:hover {
+            background-color: #E0E0E0;
+            transform: translateY(-2px);
+        }
+
+        /* Section heading style */
+        .section-heading {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--color-primary-dark-teal);
+        }
+
+        /* Menu item card styling */
+        .menu-item-card {
+            background-color: var(--color-white);
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.2s ease;
+        }
+        .menu-item-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Modal specific styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        .modal-content {
+            background-color: var(--color-background-light-cream);
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal-close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--color-text-dark-grey);
+            transition: color 0.2s ease;
+        }
+        .modal-close-button:hover {
+            color: var(--color-primary-dark-teal);
+        }
+        /* Style to hide sections for "sub-page" effect */
+        .main-content-section:not(.active-section) {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-[--color-background-light-cream] text-[--color-text-dark-grey]">
+
+    <header id="header" class="bg-white/90 backdrop-blur-sm sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="#" class="text-3xl font-bold text-[--color-primary-dark-teal] font-serif">Babai Hotel</a>
+            <div class="hidden md:flex space-x-8">
+                <a href="#home" class="nav-link text-gray-600 hover:text-[--color-primary-dark-teal] transition-colors pb-1 border-b-2 border-transparent">Home</a>
+                <a href="#menu" class="nav-link text-gray-600 hover:text-[--color-primary-dark-teal] transition-colors pb-1 border-b-2 border-transparent">Menu</a>
+                <a href="#order" class="nav-link text-gray-600 hover:text-[--color-primary-dark-teal] transition-colors pb-1 border-b-2 border-transparent">Order Online</a>
+                <a href="#catering" class="nav-link text-gray-600 hover:text-[--color-primary-dark-teal] transition-colors pb-1 border-b-2 border-transparent">Catering</a>
+                <a href="#contact" class="nav-link text-gray-600 hover:text-[--color-primary-dark-teal] transition-colors pb-1 border-b-2 border-transparent">Contact</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden text-2xl">☰</button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg">
+            <a href="#home" class="block text-center py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Home</a>
+            <a href="#menu" class="block text-center py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Menu</a>
+            <a href="#order" class="block text-center py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Order Online</a>
+            <a href="#catering" class="block text-center py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Catering</a>
+            <a href="#contact" class="block text-center py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">Contact</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Home Section - Redesigned based on user feedback and Phulkaas.com inspiration -->
+        <section id="home" class="py-20 md:py-32 bg-cover bg-center main-content-section active-section" style="background-image: url('https://placehold.co/1920x1080/D0B8A8/333333?text=Delicious+South+Indian+Food');">
+            <div class="container mx-auto px-6 text-center bg-black/60 backdrop-blur-sm rounded-lg py-12">
+                <!-- Babai Hotel Logo from uploaded image -->
+                <img src="https://content.googleapis.com/v1/generative-ai-component/file/uploaded:image_0a5ea2.png-600d2ce3-6b17-4e06-873f-b6bde28dc6bb" alt="Babai Hotel Logo" class="mx-auto mb-6 w-48 h-auto max-w-full shadow-xl">
+                <h1 class="text-4xl md:text-6xl font-bold text-white leading-tight mt-4">Babai Hotel: A Legacy of Flavor & Freshness</h1>
+                <p class="mt-4 text-lg md:text-xl text-gray-200 font-medium">
+                    Serving authentic South Indian delicacies since 1942. Experience the taste of tradition with our **freshly prepared batter, hand-picked vegetables, and healthy choices** crafted with love every day.
+                </p>
+                <div class="mt-8 space-x-4">
+                    <a href="#menu" class="btn-primary inline-block hover:scale-105">Explore Our Menu</a>
+                    <a href="#order" class="btn-secondary inline-block hover:scale-105">Order Now</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Menu Section -->
+        <section id="menu" class="py-16 md:py-24 bg-[--color-white] main-content-section">
+            <div class="container mx-auto px-6">
+                <h2 class="section-heading">Our Delicious Menu</h2>
+                <div id="menu-filters" class="flex flex-wrap justify-center gap-2 md:gap-4 mb-10">
+                    <!-- Filters will be populated by JS -->
+                </div>
+                <div id="menu-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                    <!-- Menu items will be dynamically inserted here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Order Online Section -->
+        <section id="order" class="py-16 md:py-24 main-content-section">
+            <div class="container mx-auto px-6">
+                <h2 class="section-heading">Order Online for Pickup</h2>
+                <div class="max-w-2xl mx-auto bg-[--color-white] p-8 rounded-lg shadow-md">
+                    <p class="text-center text-gray-700 mb-6">Select your items from the menu, specify quantity, and place your order for quick pickup at our Madinaguda or Nallagandla branch!</p>
+                    <form id="order-form" class="space-y-5">
+                        <div>
+                            <label for="order-item" class="block text-sm font-medium text-gray-700">Select Item:</label>
+                            <select id="order-item" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-gray-50" required>
+                                <option value="">-- Choose an item --</option>
+                                <!-- Options populated by JS -->
+                            </select>
+                        </div>
+                        <div>
+                            <label for="order-quantity" class="block text-sm font-medium text-gray-700">Quantity:</label>
+                            <input type="number" id="order-quantity" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" min="1" value="1" required>
+                        </div>
+                        <div>
+                            <label for="order-name" class="block text-sm font-medium text-gray-700">Your Name:</label>
+                            <input type="text" id="order-name" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" placeholder="Your Name" required>
+                        </div>
+                        <div>
+                            <label for="order-phone" class="block text-sm font-medium text-gray-700">Your Phone Number:</label>
+                            <input type="tel" id="order-phone" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" placeholder="e.g., 9876543210" required>
+                        </div>
+                        <div>
+                            <label for="pickup-location" class="block text-sm font-medium text-gray-700">Pickup Location:</label>
+                            <select id="pickup-location" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-gray-50" required>
+                                <option value="">-- Select a location --</option>
+                                <option value="madinaguda">Madinaguda</option>
+                                <option value="nallagandla">Nallagandla</option>
+                            </select>
+                        </div>
+                        <div id="order-message" class="text-center text-red-600 font-semibold hidden"></div>
+                        <button type="submit" class="btn-primary w-full">Place Order</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Catering Section -->
+        <section id="catering" class="py-16 md:py-24 bg-[--color-white] main-content-section">
+            <div class="container mx-auto px-6">
+                <h2 class="section-heading">Catering Services</h2>
+                <div class="max-w-2xl mx-auto bg-[--color-white] p-8 rounded-lg shadow-md">
+                    <p class="text-center text-gray-700 mb-6">Planning an event? Let Babai Hotel cater your special occasion with our authentic South Indian delicacies. Fill out the form below and we'll get in touch!</p>
+                    <form id="catering-form" class="space-y-5">
+                        <div>
+                            <label for="catering-name" class="block text-sm font-medium text-gray-700">Your Name:</label>
+                            <input type="text" id="catering-name" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" placeholder="Your Name" required>
+                        </div>
+                        <div>
+                            <label for="catering-email" class="block text-sm font-medium text-gray-700">Your Email:</label>
+                            <input type="email" id="catering-email" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" placeholder="your.email@example.com" required>
+                        </div>
+                        <div>
+                            <label for="catering-phone" class="block text-sm font-medium text-gray-700">Your Phone Number:</label>
+                            <input type="tel" id="catering-phone" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" placeholder="e.g., 9876543210" required>
+                        </div>
+                        <div>
+                            <label for="event-date" class="block text-sm font-medium text-gray-700">Event Date:</label>
+                            <input type="date" id="event-date" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required>
+                        </div>
+                        <div>
+                            <label for="guest-count" class="block text-sm font-medium text-gray-700">Approx. Number of Guests:</label>
+                            <input type="number" id="guest-count" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" min="10" placeholder="e.g., 50" required>
+                        </div>
+                        <div>
+                            <label for="catering-details" class="block text-sm font-medium text-gray-700">Additional Details:</label>
+                            <textarea id="catering-details" rows="4" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" placeholder="Tell us about your event and food preferences..."></textarea>
+                        </div>
+                        <div id="catering-message" class="text-center text-red-600 font-semibold hidden"></div>
+                        <button type="submit" class="btn-primary w-full">Request Catering Quote</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-16 md:py-24 main-content-section">
+            <div class="container mx-auto px-6">
+                <h2 class="section-heading">Contact & Locations</h2>
+                <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    <div class="bg-[--color-white] p-6 rounded-lg shadow-md text-center">
+                        <h3 class="text-xl font-bold text-[--color-primary-dark-teal] mb-3">Madinaguda Branch</h3>
+                        <p class="text-gray-700">
+                            <i class="fas fa-map-marker-alt mr-2"></i> 1-234, Main Road, Madinaguda,<br>
+                            Hyderabad, Telangana 500050
+                        </p>
+                        <p class="text-gray-700 mt-2">
+                            <i class="fas fa-phone mr-2"></i> +91 91234 56789
+                        </p>
+                        <p class="text-gray-700 mt-2">
+                            <i class="fas fa-envelope mr-2"></i> madinaguda@babaihotel.com
+                        </p>
+                        <a href="https://maps.app.goo.gl/YourMadinagudaMapLink" target="_blank" class="text-[--color-secondary-cream] hover:underline mt-4 inline-block">
+                            <i class="fas fa-directions mr-1"></i> Get Directions
+                        </a>
+                    </div>
+                    <div class="bg-[--color-white] p-6 rounded-lg shadow-md text-center">
+                        <h3 class="text-xl font-bold text-[--color-primary-dark-teal] mb-3">Nallagandla Branch</h3>
+                        <p class="text-gray-700">
+                            <i class="fas fa-map-marker-alt mr-2"></i> 5-678, High Street, Nallagandla,<br>
+                            Hyderabad, Telangana 500019
+                        </p>
+                        <p class="text-gray-700 mt-2">
+                            <i class="fas fa-phone mr-2"></i> +91 91234 56789
+                        </p>
+                        <p class="text-gray-700 mt-2">
+                            <i class="fas fa-envelope mr-2"></i> nallagandla@babaihotel.com
+                        </p>
+                        <a href="https://maps.app.goo.gl/YourNallagandlaMapLink" target="_blank" class="text-[--color-secondary-cream] hover:underline mt-4 inline-block">
+                            <i class="fas fa-directions mr-1"></i> Get Directions
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="mt-12 text-center">
+                    <h3 class="text-2xl font-bold text-[--color-primary-dark-teal] mb-4">Follow Us on Instagram!</h3>
+                    <div class="flex justify-center space-x-6">
+                        <a href="https://www.instagram.com/babaihotelmadinaguda" target="_blank" class="text-[--color-secondary-cream] hover:text-[--color-accent-brown] transition-colors text-4xl">
+                            <i class="fab fa-instagram"></i>
+                            <span class="block text-sm mt-1">@babaihotelmadinaguda</span>
+                        </a>
+                        <a href="https://www.instagram.com/babaihotelnallagandla" target="_blank" class="text-[--color-secondary-cream] hover:text-[--color-accent-brown] transition-colors text-4xl">
+                            <i class="fab fa-instagram"></i>
+                            <span class="block text-sm mt-1">@babaihotelnallagandla</span>
+                        </a>
+                    </div>
+                    <p class="mt-6 text-gray-700 text-lg">For more delicious updates, special offers, and daily specials!</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="bg-[--color-primary-dark-teal] text-white mt-16">
+        <div class="container mx-auto px-6 py-8 text-center">
+            <p class="font-serif text-3xl text-[--color-secondary-cream]">Babai Hotel</p>
+            <p class="mt-2 text-sm text-gray-400">Authentic South Indian Flavors.</p>
+            <div class="mt-4 flex justify-center space-x-6">
+                <a href="#home" class="hover:text-[--color-secondary-cream]">Home</a>
+                <a href="#menu" class="hover:text-[--color-secondary-cream]">Menu</a>
+                <a href="#order" class="hover:text-[--color-secondary-cream]">Order Online</a>
+                <a href="#catering" class="hover:text-[--color-secondary-cream]">Catering</a>
+                <a href="#contact" class="hover:text-[--color-secondary-cream]">Contact</a>
+            </div>
+             <p class="mt-8 text-xs text-gray-500">&copy; 2025 Babai Hotel. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const appData = {
+            menuItems: [
+                { id: 1, category: 'Tiffins', name: 'Babai Idli', price: 60, desc: 'Soft and fluffy Idlis, served with Sambar and Chutney.', img: 'https://placehold.co/400x300/F0E6D9/3A3A3A?text=Idli' },
+                { id: 2, category: 'Tiffins', name: 'Ghee Karam Dosa', price: 90, desc: 'Crispy Dosa with spicy red chili paste and generous ghee.', img: 'https://placehold.co/400x300/F0E6D9/3A3A3A?text=Dosa' },
+                { id: 3, category: 'Tiffins', name: 'Pesarattu Upma', price: 100, desc: 'Traditional Andhra style Pesarattu served with Upma.', img: 'https://placehold.co/400x300/F0E6D9/3A3A3A?text=Pesarattu' },
+                { id: 4, category: 'Tiffins', name: 'Medu Vada (2 Pcs)', price: 70, desc: 'Crispy fried lentil donuts, a perfect snack.', img: 'https://placehold.co/400x300/F0E6D9/3A3A3A?text=Vada' },
+                { id: 5, category: 'Tiffins', name: 'Poori Bhaji', price: 80, desc: 'Puffed deep-fried bread served with potato curry.', img: 'https://placehold.co/400x300/F0E6D9/3A3A3A?text=Poori' },
+                { id: 6, category: 'Meals', name: 'Andhra Meals (Veg)', price: 150, desc: 'Traditional Andhra Thali with rice, curries, sambar, rasam, and curd.', img: 'https://placehold.co/400x300/D9C8B8/3A3A3A?text=Meals' },
+                { id: 7, category: 'Meals', name: 'Curd Rice', price: 90, desc: 'Comforting curd rice, tempered with spices.', img: 'https://placehold.co/400x300/D9C8B8/3A3A3A?text=Curd+Rice' },
+                { id: 8, category: 'Specials', name: 'Pongal (Sweet/Spicy)', price: 80, desc: 'Sweet or savory rice and lentil dish.', img: 'https://placehold.co/400x300/C8B8A9/3A3A3A?text=Pongal' },
+                { id: 9, category: 'Beverages', name: 'Filter Coffee', price: 40, desc: 'Strong South Indian filter coffee.', img: 'https://placehold.co/400x300/A9B8C8/3A3A3A?text=Coffee' },
+                { id: 10, category: 'Beverages', name: 'Fresh Lime Soda', price: 50, desc: 'Refreshing lime soda.', img: 'https://placehold.co/400x300/A9B8C8/3A3A3A?text=Lime+Soda' }
+            ],
+            // Assuming common country codes for a general audience, can be expanded
+            countryCodes: [
+                { code: '+91', name: 'India (+91)' },
+                { code: '+1', name: 'USA (+1)' },
+                { code: '+44', name: 'UK (+44)' },
+                { code: '+971', name: 'UAE (+971)' },
+                { code: '+61', name: 'Australia (+61)' },
+                { code: '+65', name: 'Singapore (+65)' },
+                { code: '+49', name: 'Germany (+49)' },
+                { code: '+33', name: 'France (+33)' },
+                { code: '+81', name: 'Japan (+81)' },
+                { code: '+86', name: 'China (+86)' }
+            ]
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- General UI Functions ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // Function to show a specific content section and hide others
+            const showSection = (targetId) => {
+                document.querySelectorAll('.main-content-section').forEach(section => {
+                    section.classList.remove('active-section');
+                });
+                document.querySelector(targetId).classList.add('active-section');
+
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+                const activeNavLink = document.querySelector(`nav a[href="${targetId}"]`);
+                if (activeNavLink) {
+                    activeNavLink.classList.add('active');
+                }
+
+                // Scroll to the top of the main content area (after hero) for "new page" feel
+                const mainContentTop = document.querySelector('main').offsetTop;
+                window.scrollTo({
+                    top: mainContentTop,
+                    behavior: 'smooth'
+                });
+            };
+
+            // Event listeners for navigation links (desktop, mobile, and FOOTER)
+            const navLinks = document.querySelectorAll('nav a[href^="#"], #mobile-menu a[href^="#"], footer a[href^="#"]');
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('href');
+                    showSection(targetId);
+                    mobileMenu.classList.add('hidden'); // Close mobile menu if open
+                });
+            });
+
+            // --- Menu Listing and Filtering Logic ---
+            const menuFiltersContainer = document.getElementById('menu-filters');
+            const menuGrid = document.getElementById('menu-grid');
+            const categories = ['All', ...new Set(appData.menuItems.map(item => item.category))];
+
+            categories.forEach(category => {
+                const button = document.createElement('button');
+                button.textContent = category;
+                button.dataset.category = category;
+                button.className = 'px-4 py-2 text-sm font-medium rounded-md transition-all border';
+                if (category === 'All') {
+                    button.classList.add('bg-[--color-secondary-cream]', 'text-[--color-primary-dark-teal]', 'border-transparent');
+                } else {
+                    button.classList.add('bg-[--color-white]', 'text-gray-600', 'hover:bg-gray-100', 'border-gray-200');
+                }
+                menuFiltersContainer.appendChild(button);
+            });
+
+            const renderMenuItems = (filter) => {
+                menuGrid.innerHTML = '';
+                const filteredItems = filter === 'All' ? appData.menuItems : appData.menuItems.filter(item => item.category === filter);
+
+                filteredItems.forEach(item => {
+                    const card = `
+                        <div class="menu-item-card">
+                            <img src="${item.img}" alt="${item.name}" class="w-full h-48 object-cover">
+                            <div class="p-4">
+                                <h4 class="text-lg font-semibold">${item.name}</h4>
+                                <p class="text-gray-600 text-sm mt-1 mb-2">${item.desc}</p>
+                                <div class="flex justify-between items-center mt-3">
+                                    <span class="text-xl font-bold text-[--color-primary-dark-teal]">₹${item.price.toFixed(2)}</span>
+                                    <button class="add-to-order-btn bg-[--color-secondary-cream] text-[--color-primary-dark-teal] px-3 py-1 rounded-md text-sm hover:bg-[--color-accent-brown] hover:text-[--color-white] transition-colors" data-item-id="${item.id}">Add to Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    menuGrid.innerHTML += card;
+                });
+
+                // Attach event listeners for "Add to Order" buttons
+                document.querySelectorAll('.add-to-order-btn').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const itemId = parseInt(e.target.dataset.itemId);
+                        const selectedItem = appData.menuItems.find(item => item.id === itemId);
+                        if (selectedItem) {
+                            document.getElementById('order-item').value = selectedItem.id;
+                            showSection('#order'); // Scroll to order section
+                        }
+                    });
+                });
+            };
+
+            menuFiltersContainer.addEventListener('click', (e) => {
+                if(e.target.tagName === 'BUTTON') {
+                    const filter = e.target.dataset.category;
+                    renderMenuItems(filter);
+                    
+                    menuFiltersContainer.querySelectorAll('button').forEach(btn => {
+                        btn.classList.remove('bg-[--color-secondary-cream]', 'text-[--color-primary-dark-teal]', 'border-transparent');
+                        btn.classList.add('bg-[--color-white]', 'text-gray-600', 'border-gray-200');
+                    });
+                    e.target.classList.add('bg-[--color-secondary-cream]', 'text-[--color-primary-dark-teal]', 'border-transparent');
+                    e.target.classList.remove('bg-[--color-white]', 'text-gray-600', 'border-gray-200');
+                }
+            });
+            renderMenuItems('All'); // Initial render of all menu items
+
+            // Populate order form select with menu items
+            const orderItemSelect = document.getElementById('order-item');
+            appData.menuItems.forEach(item => {
+                const option = document.createElement('option');
+                option.value = item.id;
+                option.textContent = `${item.name} (₹${item.price.toFixed(2)})`;
+                orderItemSelect.appendChild(option);
+            });
+
+            // --- Order Form Submission Logic ---
+            const orderForm = document.getElementById('order-form');
+            const orderMessage = document.getElementById('order-message');
+            orderForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                orderMessage.classList.add('hidden'); // Hide previous message
+
+                if (!orderForm.checkValidity()) {
+                    orderMessage.textContent = 'Please fill in all required fields.';
+                    orderMessage.classList.remove('hidden');
+                    return;
+                }
+
+                const selectedItemId = parseInt(document.getElementById('order-item').value);
+                const selectedItem = appData.menuItems.find(item => item.id === selectedItemId);
+                const quantity = document.getElementById('order-quantity').value;
+                const customerName = document.getElementById('order-name').value;
+                const customerPhone = document.getElementById('order-phone').value;
+                const pickupLocation = document.getElementById('pickup-location').value;
+
+                console.log('Order Details:', {
+                    item: selectedItem.name,
+                    quantity: quantity,
+                    customerName: customerName,
+                    customerPhone: customerPhone,
+                    pickupLocation: pickupLocation,
+                    totalPrice: (selectedItem.price * quantity).toFixed(2)
+                });
+
+                orderMessage.textContent = `Order placed for ${quantity}x ${selectedItem.name} for pickup at ${pickupLocation}! Total: ₹${(selectedItem.price * quantity).toFixed(2)}. We will call you at ${customerPhone} when ready.`;
+                orderMessage.classList.remove('hidden');
+                orderMessage.classList.remove('text-red-600');
+                orderMessage.classList.add('text-green-600');
+
+                orderForm.reset();
+                setTimeout(() => { orderMessage.classList.add('hidden'); }, 5000);
+            });
+
+            // --- Catering Form Submission Logic ---
+            const cateringForm = document.getElementById('catering-form');
+            const cateringMessage = document.getElementById('catering-message');
+            cateringForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                cateringMessage.classList.add('hidden'); // Hide previous message
+                if (!cateringForm.checkValidity()) {
+                    cateringMessage.textContent = 'Please fill in all required fields.';
+                    cateringMessage.classList.remove('hidden');
+                    return;
+                }
+
+                const customerName = document.getElementById('catering-name').value;
+                const customerEmail = document.getElementById('catering-email').value;
+                const customerPhone = document.getElementById('catering-phone').value;
+                const eventDate = document.getElementById('event-date').value;
+                const guestCount = document.getElementById('guest-count').value;
+                const details = document.getElementById('catering-details').value;
+
+                console.log('Catering Request Details:', {
+                    name: customerName,
+                    email: customerEmail,
+                    phone: customerPhone,
+                    eventDate: eventDate,
+                    guestCount: guestCount,
+                    details: details
+                });
+
+                cateringMessage.textContent = `Catering request submitted! We will contact you soon at ${customerEmail} or ${customerPhone} to discuss your event on ${eventDate} for ${guestCount} guests.`;
+                cateringMessage.classList.remove('hidden');
+                cateringMessage.classList.remove('text-red-600');
+                cateringMessage.classList.add('text-green-600');
+
+                cateringForm.reset();
+                setTimeout(() => { cateringMessage.classList.add('hidden'); }, 5000);
+            });
+
+            // Initial load: show the home section
+            showSection('#home'); 
+        });
+    </script>
+</body>
+</html>
