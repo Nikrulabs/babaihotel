@@ -131,7 +131,10 @@
 
     <header id="header" class="bg-white/90 backdrop-blur-sm sticky top-0 z-50 shadow-sm">
         <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
-            <a href="#" class="text-3xl font-bold text-[--color-primary-dark-teal] font-serif">Babai Hotel</a>
+            <!-- Logo in the corner, clearly visible -->
+            <a href="#home" class="flex items-center">
+                <img src="https://content.googleapis.com/v1/generative-ai-component/file/uploaded:image_0a5ea2.png-600d2ce3-6b17-4e06-873f-b6bde28dc6bb" alt="Babai Hotel Logo" class="h-12 w-auto max-w-full">
+            </a>
             <div class="hidden md:flex space-x-8">
                 <a href="#home" class="nav-link text-gray-600 hover:text-[--color-primary-dark-teal] transition-colors pb-1 border-b-2 border-transparent">Home</a>
                 <a href="#menu" class="nav-link text-gray-600 hover:text-[--color-primary-dark-teal] transition-colors pb-1 border-b-2 border-transparent">Menu</a>
@@ -154,15 +157,15 @@
         <!-- Home Section - Redesigned based on user feedback and Phulkaas.com inspiration -->
         <section id="home" class="py-20 md:py-32 bg-cover bg-center main-content-section active-section" style="background-image: url('https://placehold.co/1920x1080/D0B8A8/333333?text=Delicious+South+Indian+Food');">
             <div class="container mx-auto px-6 text-center bg-black/60 backdrop-blur-sm rounded-lg py-12">
-                <!-- Babai Hotel Logo from uploaded image -->
-                <img src="https://content.googleapis.com/v1/generative-ai-component/file/uploaded:image_0a5ea2.png-600d2ce3-6b17-4e06-873f-b6bde28dc6bb" alt="Babai Hotel Logo" class="mx-auto mb-6 w-48 h-auto max-w-full shadow-xl">
+                <!-- Removed logo from here as it's now in the header -->
                 <h1 class="text-4xl md:text-6xl font-bold text-white leading-tight mt-4">Babai Hotel: A Legacy of Flavor & Freshness</h1>
                 <p class="mt-4 text-lg md:text-xl text-gray-200 font-medium">
                     Serving authentic South Indian delicacies since 1942. Experience the taste of tradition with our **freshly prepared batter, hand-picked vegetables, and healthy choices** crafted with love every day.
                 </p>
                 <div class="mt-8 space-x-4">
-                    <a href="#menu" class="btn-primary inline-block hover:scale-105">Explore Our Menu</a>
-                    <a href="#order" class="btn-secondary inline-block hover:scale-105">Order Now</a>
+                    <!-- Added a class 'hero-scroll-link' to these buttons for JS targeting -->
+                    <a href="#menu" class="hero-scroll-link btn-primary inline-block hover:scale-105">Explore Our Menu</a>
+                    <a href="#order" class="hero-scroll-link btn-secondary inline-block hover:scale-105">Order Now</a>
                 </div>
             </div>
         </section>
@@ -276,7 +279,8 @@
                         <p class="text-gray-700 mt-2">
                             <i class="fas fa-envelope mr-2"></i> madinaguda@babaihotel.com
                         </p>
-                        <a href="https://maps.app.goo.gl/YourMadinagudaMapLink" target="_blank" class="text-[--color-secondary-cream] hover:underline mt-4 inline-block">
+                        <!-- Updated map link placeholder -->
+                        <a href="https://www.google.com/maps/search/Babai+Hotel+Madinaguda" target="_blank" class="text-[--color-secondary-cream] hover:underline mt-4 inline-block">
                             <i class="fas fa-directions mr-1"></i> Get Directions
                         </a>
                     </div>
@@ -292,7 +296,8 @@
                         <p class="text-gray-700 mt-2">
                             <i class="fas fa-envelope mr-2"></i> nallagandla@babaihotel.com
                         </p>
-                        <a href="https://maps.app.goo.gl/YourNallagandlaMapLink" target="_blank" class="text-[--color-secondary-cream] hover:underline mt-4 inline-block">
+                        <!-- Updated map link placeholder -->
+                        <a href="https://www.google.com/maps/search/Babai+Hotel+Nallagandla" target="_blank" class="text-[--color-secondary-cream] hover:underline mt-4 inline-block">
                             <i class="fas fa-directions mr-1"></i> Get Directions
                         </a>
                     </div>
@@ -371,11 +376,14 @@
             
             // Function to show a specific content section and hide others
             const showSection = (targetId) => {
+                // Ensure all main-content-sections are initially hidden
                 document.querySelectorAll('.main-content-section').forEach(section => {
                     section.classList.remove('active-section');
                 });
+                // Show the target section
                 document.querySelector(targetId).classList.add('active-section');
 
+                // Update active navigation link styling
                 document.querySelectorAll('.nav-link').forEach(link => {
                     link.classList.remove('active');
                 });
@@ -393,6 +401,7 @@
             };
 
             // Event listeners for navigation links (desktop, mobile, and FOOTER)
+            // Added '#' to the href for consistent handling
             const navLinks = document.querySelectorAll('nav a[href^="#"], #mobile-menu a[href^="#"], footer a[href^="#"]');
             navLinks.forEach(link => {
                 link.addEventListener('click', (e) => {
@@ -402,6 +411,17 @@
                     mobileMenu.classList.add('hidden'); // Close mobile menu if open
                 });
             });
+
+            // NEW: Event listeners for the hero section buttons
+            const heroScrollLinks = document.querySelectorAll('.hero-scroll-link');
+            heroScrollLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('href');
+                    showSection(targetId);
+                });
+            });
+
 
             // --- Menu Listing and Filtering Logic ---
             const menuFiltersContainer = document.getElementById('menu-filters');
@@ -552,6 +572,11 @@
 
                 cateringForm.reset();
                 setTimeout(() => { cateringMessage.classList.add('hidden'); }, 5000);
+                
+                // Mailto link for catering (for demonstration) - ENQUIRY EMAIL TO edulaksy@gmail.com
+                const subject = encodeURIComponent("Catering Inquiry from Babai Hotel Website");
+                const body = encodeURIComponent(`Name: ${customerName}\nEmail: ${customerEmail}\nPhone: ${customerPhone}\nEvent Date: ${eventDate}\nNumber of Guests: ${guestCount}\nDetails: ${details}`);
+                window.location.href = `mailto:edulaksy@gmail.com?subject=${subject}&body=${body}`;
             });
 
             // Initial load: show the home section
