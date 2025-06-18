@@ -156,12 +156,16 @@
     </header>
 
     <main>
-        <!-- Home Section - Redesigned based on user feedback and Phulkaas.com inspiration -->
-        <section id="home" class="py-32 md:py-48 lg:py-64 bg-cover bg-center main-content-section active-section" style="background-image: url('priya.jpeg'); background-position: center;">
-            <div class="container mx-auto px-6 text-center bg-black/60 backdrop-blur-sm rounded-lg py-12">
-                <!-- Removed logo from here as it's now in the header -->
-                <h1 class="text-4xl md:text-6xl font-bold text-white leading-tight mt-4">Babai Hotel: A Legacy of Flavor & Freshness</h1>
-                <p class="mt-4 text-lg md:text-xl text-gray-200 font-medium">
+        <!-- Home Section - Restructured for clear image visibility -->
+        <section id="home" class="main-content-section active-section">
+            <!-- Image placed directly -->
+            <div class="w-full overflow-hidden">
+                <img src="priya.jpeg" alt="Babai Hotel Banner" class="w-full h-auto object-cover max-h-[500px] md:max-h-[600px] lg:max-h-[700px]">
+            </div>
+            <!-- Text banner below the image -->
+            <div class="container mx-auto px-6 py-12 text-center bg-secondary-cream-light">
+                <h1 class="text-4xl md:text-6xl font-bold text-[--color-accent-mocha-brown] leading-tight mt-4">Babai Hotel: A Legacy of Flavor & Freshness</h1>
+                <p class="mt-4 text-lg md:text-xl text-[--color-accent-mocha-brown] font-medium">
                     Serving authentic South Indian delicacies since 1942. Experience the taste of tradition with our **freshly prepared batter, hand-picked vegetables, and healthy choices** crafted with love every day.
                 </p>
                 <div class="mt-8 space-x-4">
@@ -279,7 +283,7 @@
                         <p class="text-gray-700 mt-2">
                             <i class="fas fa-phone mr-2"></i> +91 91234 56789
                         </p>
-                        <p class="text-gray-700 mt-2">
+                        <p class="text-700 mt-2">
                             <i class="fas fa-envelope mr-2"></i> madinaguda@babaihotel.com
                         </p>
                         <!-- Updated map link placeholder -->
